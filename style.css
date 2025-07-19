@@ -1,0 +1,488 @@
+/* Основные стили */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.telegram-link {
+  color: #888;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+/* Основной контент */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+/* Фотографии пары */
+.couple-photos {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.polaroid {
+  text-align: center;
+  transform: rotate(-2deg);
+}
+
+.polaroid.bride {
+  transform: rotate(2deg);
+}
+
+.photo-frame {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.couple-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.photo-placeholder {
+  font-size: 48px;
+}
+
+.photo-label {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Имена пары */
+.couple-names {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+/* Текст приглашения */
+.invitation-text {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: #555;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.invitation-text::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, #e74c3c, #f39c12);
+  border-radius: 1px;
+}
+
+/* Дата и время */
+.date-time {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.date {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.calendar {
+  display: inline-block;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.month {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.calendar-day {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+/* Тайминг */
+.timeline {
+  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.timeline-path {
+  position: relative;
+  padding-left: 30px;
+}
+
+.timeline-path::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #e74c3c, #f39c12, #27ae60);
+  border-radius: 1px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.timeline-item::before {
+  content: '❤️';
+  position: absolute;
+  left: -25px;
+  top: 0;
+  font-size: 12px;
+}
+
+.time {
+  font-weight: bold;
+  color: #e74c3c;
+  font-size: 1.1rem;
+}
+
+.event {
+  font-weight: 500;
+  color: #2c3e50;
+  margin-left: 10px;
+}
+
+.description {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+/* Дресс-код */
+.dress-code {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.dress-code-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: #27ae60;
+  margin-bottom: 15px;
+}
+
+.dress-code p {
+  margin-bottom: 20px;
+  color: #555;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.dress-code p::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+  border-radius: 1px;
+}
+
+.color-palette {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.color-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.color-circle.pink { background: #e8b4b8; }
+.color-circle.green { background: #2d5016; }
+.color-circle.cream { background: #f5f5dc; }
+.color-circle.brown { background: #8b4513; }
+.color-circle.sage { background: #9dc183; }
+.color-circle.beige { background: #f5e6d3; }
+
+/* Таймер обратного отсчета */
+.countdown {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.countdown-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: #27ae60;
+  margin-bottom: 20px;
+}
+
+.countdown-timer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  text-align: center;
+  min-width: 60px;
+}
+
+.number {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+.label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+/* Анкета гостя */
+.guest-form {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2c3e50;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #e74c3c;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.radio-option:hover {
+  background-color: #f8f9fa;
+}
+
+.radio-option input[type="radio"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Заключительное изображение */
+.final-image {
+  text-align: center;
+}
+
+.polaroid.final {
+  margin-bottom: 15px;
+}
+
+.polaroid.final .photo-frame {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 10px;
+}
+
+.final-message {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #27ae60;
+  font-style: italic;
+}
+
+/* Сообщение об успешной отправке */
+.thanks-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .couple-photos {
+    gap: 15px;
+  }
+  
+  .photo-frame {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .couple-names {
+    font-size: 2rem;
+  }
+  
+  .countdown-timer {
+    gap: 10px;
+  }
+  
+  .countdown-item {
+    min-width: 50px;
+  }
+  
+  .timeline,
+  .dress-code,
+  .countdown,
+  .guest-form {
+    padding: 20px;
+  }
+}
+
