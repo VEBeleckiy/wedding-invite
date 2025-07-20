@@ -23,7 +23,7 @@ function handleImageLoad() {
 
 // Таймер обратного отсчета
 function updateCountdown() {
-  const weddingDate = new Date('2025-09-05T15:00:00');
+  const weddingDate = new Date('2025-10-25T15:00:00');
   const now = new Date();
   const difference = weddingDate - now;
 
@@ -47,8 +47,27 @@ setInterval(updateCountdown, 1000);
 updateCountdown(); // Запускаем сразу
 
 // Обработка формы
-document.getElementById('rsvp-form').addEventListener('submit', async e => {
+const rsvpForm = document.getElementById('rsvp-form');
+const submitBtn = rsvpForm.querySelector('.submit-btn');
+
+// Универсальная функция с повторными попытками
+async function retryAsync(fn, maxAttempts = 10, delay = 500) {
+  let lastError;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const result = await fn();
+      if (result !== false && result !== undefined) return result;
+    } catch (err) {
+      lastError = err;
+    }
+    await new Promise(res => setTimeout(res, delay));
+  }
+  throw lastError || new Error('Не удалось выполнить операцию после нескольких попыток');
+}
+
+rsvpForm.addEventListener('submit', async e => {
   e.preventDefault();
+  submitBtn.disabled = true;
   const formData = new FormData(e.target);
   const params = new URLSearchParams();
   
@@ -74,21 +93,35 @@ document.getElementById('rsvp-form').addEventListener('submit', async e => {
   
   if (missingFields.length > 0) {
     alert('Пожалуйста, заполните все обязательные поля: ' + missingFields.join(', '));
+    submitBtn.disabled = false;
     return;
   }
 
-  // Отправка в Google таблицу
-  const googleResponse = await fetch('https://script.google.com/macros/s/AKfycbzr_G1g10OMvbNQ5Xb3aizFUrCnxGwqpQ-boM8suhzWX4AHK0Yay5I5_-bhpsIvGuK5/exec', {
-    method: 'POST',
-    body: params
-  });
+  // Retry отправка в Google таблицу
+  let googleResponse;
+  try {
+    googleResponse = await retryAsync(() => fetch('https://script.google.com/macros/s/AKfycbzr_G1g10OMvbNQ5Xb3aizFUrCnxGwqpQ-boM8suhzWX4AHK0Yay5I5_-bhpsIvGuK5/exec', {
+      method: 'POST',
+      body: params
+    }), 10, 1000);
+  } catch (err) {
+    console.error('Ошибка отправки в Google таблицу:', err);
+    alert('Ошибка, попробуйте позже');
+    submitBtn.disabled = false;
+    return;
+  }
 
   if (googleResponse.ok) {
     console.log('Данные успешно отправлены в Google таблицу');
     
-    // Отправка сообщения в Telegram
+    // Retry отправка в Telegram
     const telegramMessage = TelegramService.formatRSVPMessage(formData);
-    const telegramSent = await TelegramService.sendMessage(telegramMessage);
+    let telegramSent = false;
+    try {
+      telegramSent = await retryAsync(() => TelegramService.sendMessage(telegramMessage), 10, 1000);
+    } catch (err) {
+      console.error('Ошибка отправки в Telegram:', err);
+    }
     
     // Показываем результат пользователю
     const thanksElement = document.getElementById('thanks');
@@ -98,18 +131,28 @@ document.getElementById('rsvp-form').addEventListener('submit', async e => {
       thanksElement.textContent = 'Спасибо! Ваш ответ сохранён.';
     }
     thanksElement.style.display = '';
-    
-    // Скрываем сообщение через 3 секунды
+
+    // Делаем все поля формы только для чтения/disabled
+    rsvpForm.querySelectorAll('input, textarea').forEach(el => {
+      if (el.type === 'radio' || el.type === 'checkbox') {
+        el.disabled = true;
+      } else {
+        el.readOnly = true;
+      }
+    });
+    submitBtn.classList.add('sent'); // на всякий случай для кастомных стилей
+    submitBtn.disabled = true;
+
     setTimeout(() => {
       thanksElement.style.display = 'none';
     }, 3000);
-    
-    e.target.reset();
+    // e.target.reset(); // Не сбрасываем, чтобы показать введённые данные
   } else {
     console.error('Ошибка отправки в Google таблицу:', googleResponse.status, googleResponse.statusText);
     const responseText = await googleResponse.text();
     console.error('Ответ сервера:', responseText);
     alert('Ошибка, попробуйте позже');
+    submitBtn.disabled = false;
   }
 });
 
