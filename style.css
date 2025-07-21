@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #f7f2e8;
   color: #333;
   line-height: 1.6;
 }
@@ -21,6 +21,7 @@ html, body {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  background: #f7f2e8;
 }
 
 /* Header */
@@ -164,72 +165,115 @@ html, body {
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .timeline-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
   text-align: center;
-  margin-bottom: 20px;
-  color: #2c3e50;
+  margin-bottom: 30px;
+  color: #27ae60;
+  font-weight: 600;
 }
 
 .timeline-path {
   position: relative;
-  padding-left: 30px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .timeline-path::before {
   content: '';
   position: absolute;
-  left: 15px;
+  left: 50%;
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(180deg, #e74c3c, #f39c12, #27ae60);
-  border-radius: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #e8b4b8 0px,
+    #e8b4b8 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  transform: translateX(-50%);
 }
 
 .timeline-item {
   position: relative;
-  margin-bottom: 20px;
-  padding-left: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-item:nth-child(odd) {
+  flex-direction: row;
+}
+
+.timeline-item:nth-child(even) {
+  flex-direction: row-reverse;
 }
 
 .timeline-item::before {
   content: '❤️';
   position: absolute;
-  left: -25px;
-  top: 0;
-  font-size: 12px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  z-index: 2;
+  background: white;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.timeline-content {
+  width: 45%;
+  padding: 15px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+  margin-right: auto;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+  margin-left: auto;
 }
 
 .time {
-  font-weight: bold;
-  color: #e74c3c;
+  font-weight: 600;
+  color: #e8b4b8;
   font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 5px;
 }
 
 .event {
   font-weight: 500;
   color: #2c3e50;
-  margin-left: 10px;
+  margin-bottom: 5px;
+  font-size: 1rem;
 }
 
 .description {
   display: block;
   font-size: 0.9rem;
   color: #666;
-  margin-top: 5px;
   font-style: italic;
+  line-height: 1.4;
 }
 
 /* Дресс-код */
 .dress-code {
-  background: rgba(255, 255, 255, 0.9);
+  background: transparent;
   padding: 30px;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   text-align: center;
 }
 
@@ -262,24 +306,64 @@ html, body {
 .color-palette {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  height: 200px;
+  margin: 20px 0;
 }
 
 .color-circle {
-  width: 40px;
-  height: 40px;
+  position: absolute;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   border: 3px solid white;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
 }
 
-.color-circle.pink { background: #e8b4b8; }
-.color-circle.green { background: #2d5016; }
-.color-circle.cream { background: #f5f5dc; }
-.color-circle.brown { background: #8b4513; }
-.color-circle.sage { background: #9dc183; }
-.color-circle.beige { background: #f5e6d3; }
+.color-circle:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.color-circle.pink { 
+  background: #e8b4b8; 
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.color-circle.brown { 
+  background: #8b4513; 
+  top: 50px;
+  right: 30px;
+}
+
+.color-circle.beige { 
+  background: #f5e6d3; 
+  bottom: 50px;
+  right: 30px;
+}
+
+.color-circle.sage { 
+  background: #9dc183; 
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.color-circle.green { 
+  background: #2d5016; 
+  bottom: 50px;
+  left: 30px;
+}
+
+.color-circle.cream { 
+  background: #f5f5dc; 
+  top: 50px;
+  left: 30px;
+}
 
 /* Таймер обратного отсчета */
 .countdown {
@@ -477,6 +561,78 @@ html, body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
   to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Мини-календарь для даты свадьбы */
+.calendar-table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  padding: 18px 12px 12px 12px;
+  margin: 0 auto 20px auto;
+  max-width: 320px;
+}
+.calendar-header {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #e74c3c;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+.calendar-mini {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1rem;
+  background: none;
+}
+.calendar-mini th, .calendar-mini td {
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: 500;
+  color: #2c3e50;
+}
+.calendar-mini th {
+  color: #aaa;
+  font-size: 0.9em;
+  font-weight: 400;
+  background: none;
+  border: none;
+}
+.calendar-mini td {
+  background: none;
+  border: none;
+  transition: background 0.2s;
+}
+.calendar-mini td.calendar-heart {
+  background: #ffeaea;
+  color: #e74c3c;
+  font-weight: 700;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(231,76,60,0.08);
+}
+.calendar-mini td.calendar-heart .heart {
+  font-size: 1.1em;
+  margin-left: 2px;
+  vertical-align: middle;
+}
+@media (max-width: 500px) {
+  .calendar-table {
+    max-width: 98vw;
+    padding: 10px 2vw 8px 2vw;
+  }
+  .calendar-mini th, .calendar-mini td {
+    width: 9vw;
+    height: 9vw;
+    min-width: 28px;
+    min-height: 28px;
+    font-size: 0.95em;
+  }
 }
 
 /* Адаптивность */

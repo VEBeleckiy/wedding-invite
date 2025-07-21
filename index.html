@@ -45,10 +45,22 @@
 
       <!-- Дата и время -->
       <div class="date-time">
-        <h2 class="date">25.10.2025 в 15:00</h2>
-        <div class="calendar">
-          <span class="month">сентябрь</span>
-          <div class="calendar-day">5</div>
+        <div class="calendar-table">
+          <div class="calendar-header">Октябрь 2025</div>
+          <table class="calendar-mini">
+            <thead>
+              <tr>
+                <th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+              <tr><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td></tr>
+              <tr><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
+              <tr><td>21</td><td>22</td><td>23</td><td>24</td><td class="calendar-heart">25 <span class="heart">❤️</span></td><td>26</td><td>27</td></tr>
+              <tr><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -57,26 +69,36 @@
         <h3 class="timeline-title">Тайминг</h3>
         <div class="timeline-path">
           <div class="timeline-item">
-            <span class="time">15:00</span>
-            <span class="event">Welcome-фуршет</span>
-            <span class="description">расслабляемся после дороги</span>
+            <div class="timeline-content">
+              <div class="time">15:00</div>
+              <div class="event">Welcome-фуршет</div>
+              <div class="description">расслабляемся после дороги</div>
+            </div>
           </div>
           <div class="timeline-item">
-            <span class="time">16:00</span>
-            <span class="event">Церемония</span>
-            <span class="description">немного смеемся, немного плачем</span>
+            <div class="timeline-content">
+              <div class="time">16:00</div>
+              <div class="event">Церемония</div>
+              <div class="description">немного смеемся, немного плачем</div>
+            </div>
           </div>
           <div class="timeline-item">
-            <span class="time">17:00</span>
-            <span class="event">Гастрономический ужин</span>
+            <div class="timeline-content">
+              <div class="time">17:00</div>
+              <div class="event">Гастрономический ужин</div>
+            </div>
           </div>
           <div class="timeline-item">
-            <span class="time">18:00</span>
-            <span class="event">Танцы</span>
+            <div class="timeline-content">
+              <div class="time">18:00</div>
+              <div class="event">Танцы</div>
+            </div>
           </div>
           <div class="timeline-item">
-            <span class="time">23:00</span>
-            <span class="event">Финал</span>
+            <div class="timeline-content">
+              <div class="time">23:00</div>
+              <div class="event">Финал</div>
+            </div>
           </div>
         </div>
       </div>
@@ -85,14 +107,10 @@
       <div class="dress-code">
         <h3 class="dress-code-title">Дресс-код</h3>
         <p>Будем благодарны, если сможете добавить в ваш образ элементы данной цветовой палитры</p>
-        <div class="color-palette">
-          <div class="color-circle pink"></div>
-          <div class="color-circle green"></div>
-          <div class="color-circle cream"></div>
-          <div class="color-circle brown"></div>
-          <div class="color-circle sage"></div>
-          <div class="color-circle beige"></div>
+        <div class="color-palette" style="display: flex; justify-content: center; align-items: center; background: transparent; box-shadow: none;">
+          <img src="палитра.png" alt="Цветовая палитра" style="max-width: 260px; width: 100%; height: auto; border-radius: 16px;">
         </div>
+        <div style="font-size: 0.95em; color: #888; margin-top: 8px;">Палитра для вдохновения</div>
       </div>
 
       <!-- Таймер обратного отсчета -->
