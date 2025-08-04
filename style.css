@@ -417,6 +417,54 @@ html, body {
   .profile-label {
     font-size: 1.2rem;
   }
+  
+  .gift-wishes {
+    margin: 30px 0;
+    padding: 20px 10px;
+  }
+  
+  .gift-wishes-title {
+    font-size: 1.4rem;
+  }
+  
+  .gift-text,
+  .note-text,
+  .adult-event-text {
+    font-size: 0.95rem;
+  }
+  
+  .note-title {
+    font-size: 1.1rem;
+  }
+  
+
+  
+  .confirmation-text,
+  .photo-text,
+  .dress-code-note p {
+    font-size: 0.95rem;
+  }
+  
+  .confirmation-title,
+  .photo-title {
+    font-size: 1.1rem;
+  }
+  
+  .blue-dot,
+  .red-dot {
+    width: 5px;
+    height: 5px;
+  }
+  
+  .closing-line-1 {
+    font-size: 1.6rem;
+  }
+  
+  .closing-line-2 {
+    font-size: 1.8rem;
+  }
+  
+
 }
 
 @media (max-width: 360px) {
@@ -486,6 +534,54 @@ html, body {
   .profile-label {
     font-size: 1.1rem;
   }
+  
+  .gift-wishes {
+    margin: 20px 0;
+    padding: 15px 8px;
+  }
+  
+  .gift-wishes-title {
+    font-size: 1.2rem;
+  }
+  
+  .gift-text,
+  .note-text,
+  .adult-event-text {
+    font-size: 0.9rem;
+  }
+  
+  .note-title {
+    font-size: 1rem;
+  }
+  
+
+  
+  .confirmation-text,
+  .photo-text,
+  .dress-code-note p {
+    font-size: 0.9rem;
+  }
+  
+  .confirmation-title,
+  .photo-title {
+    font-size: 1rem;
+  }
+  
+  .blue-dot,
+  .red-dot {
+    width: 4px;
+    height: 4px;
+  }
+  
+  .closing-line-1 {
+    font-size: 1.4rem;
+  }
+  
+  .closing-line-2 {
+    font-size: 1.6rem;
+  }
+  
+
 }
 
 /* Второй блок - Приглашение */
@@ -601,6 +697,200 @@ html, body {
   margin: 0;
   line-height: 1.2;
 }
+
+/* Четвертый блок - Пожелания по подаркам и информация */
+.gift-wishes {
+  text-align: center;
+  margin: 60px 0;
+  padding: 40px 20px;
+}
+
+.gift-wishes-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.gift-wishes-content {
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto 20px auto;
+}
+
+.gift-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.note-section {
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.note-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2c3e50;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.note-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.adult-event-section {
+  margin-top: 15px;
+}
+
+.adult-event-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  line-height: 1.6;
+  font-style: italic;
+  text-align: left;
+}
+
+
+
+
+
+.confirmation-section {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.confirmation-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #2c3e50;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.blue-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #007bff;
+  border-radius: 50%;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.confirmation-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #888;
+  line-height: 1.6;
+  text-align: center;
+  position: relative;
+}
+
+.red-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #dc3545;
+  border-radius: 50%;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.underlined {
+  text-decoration: underline;
+  text-decoration-color: #ff6b35;
+  text-decoration-thickness: 2px;
+}
+
+.photo-section {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.photo-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #2c3e50;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.photo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #888;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.closing-message {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.closing-line-1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.closing-line-2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin: 0;
+  line-height: 1.2;
+  text-indent: 20px;
+}
+
+.dress-code-note {
+  text-align: left;
+  margin-top: 20px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dress-code-note p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #888;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+
 
 /* Дата и время */
 .date-time {
@@ -1171,6 +1461,54 @@ html, body {
   .profile-label {
     font-size: 1.3rem;
   }
+  
+  .gift-wishes {
+    margin: 40px 0;
+    padding: 30px 15px;
+  }
+  
+  .gift-wishes-title {
+    font-size: 1.6rem;
+  }
+  
+  .gift-text,
+  .note-text,
+  .adult-event-text {
+    font-size: 1rem;
+  }
+  
+  .note-title {
+    font-size: 1.2rem;
+  }
+  
+
+  
+  .confirmation-text,
+  .photo-text,
+  .dress-code-note p {
+    font-size: 1rem;
+  }
+  
+  .confirmation-title,
+  .photo-title {
+    font-size: 1.2rem;
+  }
+  
+  .blue-dot,
+  .red-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .closing-line-1 {
+    font-size: 1.8rem;
+  }
+  
+  .closing-line-2 {
+    font-size: 2rem;
+  }
+  
+
   
   .timeline,
   .dress-code,
