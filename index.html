@@ -5,64 +5,112 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Влад + Саша - Свадьба</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/miss-katherine" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
+    <!-- Header с меню -->
     <header class="header">
-      <p class="telegram-link"></p>
+      <div class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </header>
 
     <div class="main-content">
-      <!-- Фотографии жениха и невесты -->
-      <div class="couple-photos">
-        <div class="polaroid groom">
-          <div class="photo-frame">
-            <img src="жених.jpg" alt="Жених" class="couple-photo">
-            <!-- Если фото нет, показываем эмодзи -->
-            <div class="photo-placeholder" style="display: none;">👔</div>
-          </div>
-          <p class="photo-label">жених</p>
+      <!-- Первый блок - Hero секция -->
+      <div class="hero-section">
+        <div class="hero-text">
+          <p class="hero-subtitle">ПРИГЛАШАЕМ</p>
+          <p class="hero-subtitle">ВАС НА НАШУ СВАДЬБУ</p>
         </div>
-        <div class="polaroid bride">
-          <div class="photo-frame">
-            <img src="невеста.jpg" alt="Невеста" class="couple-photo">
-            <!-- Если фото нет, показываем эмодзи -->
-            <div class="photo-placeholder" style="display: none;">👰</div>
+        
+        <div class="names-section">
+          <div class="background-text-1">НАША</div>
+          <div class="background-text-2">СВА</div>
+          <div class="background-text-3">ДЬБА</div>
+          <div class="names-container">
+            <h1 class="groom-name">Владислав</h1>
+            <p class="and-text">and</p>
+            <h1 class="bride-name">Александра</h1>
           </div>
-          <p class="photo-label">невеста</p>
+        </div>
+        
+        <div class="date-section">
+          <p class="wedding-date">25 ОКТЯБРЯ 2025</p>
+          <p class="invitation-text">БУДЕМ РАДЫ РАЗДЕЛИТЬ ЭТОТ ДЕНЬ С ВАМИ</p>
+        </div>
+        
+        <!-- Таймер обратного отсчета -->
+        <div class="countdown-section">
+          <div class="countdown-timer" id="countdown">
+            <div class="countdown-item">
+              <span class="number" id="weeks">0</span>
+              <span class="label">недель</span>
+            </div>
+            <div class="countdown-item">
+              <span class="number" id="days">0</span>
+              <span class="label">дней</span>
+            </div>
+            <div class="countdown-item">
+              <span class="number" id="hours">0</span>
+              <span class="label">часов</span>
+            </div>
+            <div class="countdown-item">
+              <span class="number" id="minutes">0</span>
+              <span class="label">минут</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Календарь -->
+        <div class="calendar-section">
+          <div class="calendar-table">
+            <div class="calendar-header">Октябрь 2025</div>
+            <table class="calendar-mini">
+              <thead>
+                <tr>
+                  <th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+                <tr><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td></tr>
+                <tr><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
+                <tr><td>21</td><td>22</td><td>23</td><td>24</td><td class="calendar-heart">25 <span class="heart">❤️</span></td><td>26</td><td>27</td></tr>
+                <tr><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <!-- Имена -->
-      <h1 class="couple-names">Влад + Саша</h1>
-
-      <!-- Приглашение -->
-      <p class="invitation-text">
-        Мы будем счастливы разделить с вами радость неповторимого для нас дня – дня нашей свадьбы!
-      </p>
-
-      <!-- Дата и время -->
-      <div class="date-time">
-        <div class="calendar-table">
-          <div class="calendar-header">Октябрь 2025</div>
-          <table class="calendar-mini">
-            <thead>
-              <tr>
-                <th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
-              <tr><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td></tr>
-              <tr><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
-              <tr><td>21</td><td>22</td><td>23</td><td>24</td><td class="calendar-heart">25 <span class="heart">❤️</span></td><td>26</td><td>27</td></tr>
-              <tr><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td><td></td></tr>
-            </tbody>
-          </table>
+      <!-- Остальные секции пока оставляем как есть -->
+      <!-- Второй блок - Приглашение -->
+      <div class="invitation-block">
+        <div class="invitation-greeting">
+          <p class="greeting-line-1">Дорогой</p>
+          <p class="greeting-line-2">Гость!</p>
+        </div>
+        
+        <div class="invitation-message">
+          <p>Мы рады сообщить Вам, что</p>
+          <p>25.10.2025 состоится самое</p>
+          <p>главное торжество в нашей жизни</p>
+          <p>- день нашей свадьбы!</p>
+          <p>Приглашаем Вас разделить с нами</p>
+          <p>радость этого незабываемого дня.</p>
+        </div>
+        
+        <div class="event-details">
+          <p>25.10.2025 в 18:00</p>
+          <p>Советская 78А</p>
         </div>
       </div>
+
+
 
       <!-- Тайминг -->
       <div class="timeline">

@@ -21,24 +21,69 @@ function handleImageLoad() {
   });
 }
 
+// Функция для автоматического уменьшения размера шрифта
+function adjustFontSize() {
+  const names = document.querySelectorAll('.groom-name, .bride-name');
+  const container = document.querySelector('.names-container');
+  
+  if (!container) return;
+  
+  const containerWidth = container.offsetWidth - 20; // Учитываем padding
+  
+  names.forEach(name => {
+    // Сбрасываем размер к базовому
+    name.style.fontSize = '';
+    
+    // Проверяем, помещается ли текст
+    while (name.scrollWidth > containerWidth && parseInt(getComputedStyle(name).fontSize) > 20) {
+      const currentSize = parseInt(getComputedStyle(name).fontSize);
+      name.style.fontSize = (currentSize - 5) + 'px';
+    }
+  });
+}
+
 // Таймер обратного отсчета
 function updateCountdown() {
-  const weddingDate = new Date('2025-10-25T15:00:00');
+  const weddingDate = new Date('2025-10-25T18:00:00');
   const now = new Date();
   const difference = weddingDate - now;
 
   if (difference > 0) {
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const weeks = Math.floor(difference / (1000 * 60 * 60 * 24 * 7));
+    const days = Math.floor((difference % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
     const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-    document.getElementById('days').textContent = days;
-    document.getElementById('hours').textContent = hours;
-    document.getElementById('minutes').textContent = minutes;
-    document.getElementById('seconds').textContent = seconds;
+    // Обновляем элементы таймера в hero секции
+    const weeksElement = document.getElementById('weeks');
+    const daysElement = document.getElementById('days');
+    const hoursElement = document.getElementById('hours');
+    const minutesElement = document.getElementById('minutes');
+    
+    if (weeksElement) weeksElement.textContent = weeks;
+    if (daysElement) daysElement.textContent = days;
+    if (hoursElement) hoursElement.textContent = hours;
+    if (minutesElement) minutesElement.textContent = minutes;
+    
+    // Также обновляем старый таймер если он есть
+    const oldDaysElement = document.querySelector('#countdown .countdown-item:nth-child(1) .number');
+    const oldHoursElement = document.querySelector('#countdown .countdown-item:nth-child(2) .number');
+    const oldMinutesElement = document.querySelector('#countdown .countdown-item:nth-child(3) .number');
+    const oldSecondsElement = document.querySelector('#countdown .countdown-item:nth-child(4) .number');
+    
+    if (oldDaysElement) oldDaysElement.textContent = days;
+    if (oldHoursElement) oldHoursElement.textContent = hours;
+    if (oldMinutesElement) oldMinutesElement.textContent = minutes;
+    if (oldSecondsElement) {
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      oldSecondsElement.textContent = seconds;
+    }
   } else {
-    document.getElementById('countdown').innerHTML = '<p style="font-size: 1.2rem; color: #e74c3c;">Сегодня наш день! 🎉</p>';
+    // Если свадьба уже прошла
+    const countdownElements = document.querySelectorAll('#countdown, .countdown-section');
+    countdownElements.forEach(element => {
+      element.innerHTML = '<p style="font-size: 1.2rem; color: #000;">Сегодня наш день! 🎉</p>';
+    });
   }
 }
 
@@ -156,5 +201,11 @@ rsvpForm.addEventListener('submit', async e => {
   }
 });
 
-// Инициализация обработки фотографий после загрузки страницы
-document.addEventListener('DOMContentLoaded', handleImageLoad);
+// Инициализация обработки фотографий и адаптации размера шрифта после загрузки страницы
+document.addEventListener('DOMContentLoaded', function() {
+  handleImageLoad();
+  adjustFontSize();
+  
+  // Адаптируем размер при изменении размера окна
+  window.addEventListener('resize', adjustFontSize);
+});
