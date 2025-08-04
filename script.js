@@ -128,10 +128,6 @@ function createGuestForm(index) {
           <input type="radio" name="willAttend_${index}" value="Обязательно буду!" required checked>
           <span>Обязательно буду!</span>
         </label>
-        <label class="radio-option">
-          <input type="radio" name="willAttend_${index}" value="К сожалению, не смогу">
-          <span>К сожалению, не смогу</span>
-        </label>
       </div>
     </div>
   ` : `
@@ -289,10 +285,19 @@ async function submitSingleForm(form) {
   
   allFields.forEach(field => {
     const fieldName = field === 'name' ? `name_${formIndex}` : `${field}_${formIndex}`;
-    const input = form.querySelector(`[name="${fieldName}"]`);
-    const value = input ? (input.type === 'radio' ? (input.checked ? input.value : '') : input.value) : '';
-    params.append(field, value); // Отправляем в таблицу с оригинальными именами
-    dataToSend[field] = value;
+    
+    if (field === 'drink') {
+      // Для напитков ищем выбранную radio кнопку
+      const selectedDrink = form.querySelector(`input[name="${fieldName}"]:checked`);
+      const value = selectedDrink ? selectedDrink.value : '';
+      params.append(field, value);
+      dataToSend[field] = value;
+    } else {
+      const input = form.querySelector(`[name="${fieldName}"]`);
+      const value = input ? (input.type === 'radio' ? (input.checked ? input.value : '') : input.value) : '';
+      params.append(field, value);
+      dataToSend[field] = value;
+    }
   });
 
   // Проверяем, что все обязательные поля заполнены
@@ -317,9 +322,17 @@ async function submitSingleForm(form) {
   const formDataForTelegram = new FormData();
   allFields.forEach(field => {
     const fieldName = field === 'name' ? `name_${formIndex}` : `${field}_${formIndex}`;
-    const input = form.querySelector(`[name="${fieldName}"]`);
-    const value = input ? (input.type === 'radio' ? (input.checked ? input.value : '') : input.value) : '';
-    formDataForTelegram.append(fieldName, value);
+    
+    if (field === 'drink') {
+      // Для напитков ищем выбранную radio кнопку
+      const selectedDrink = form.querySelector(`input[name="${fieldName}"]:checked`);
+      const value = selectedDrink ? selectedDrink.value : '';
+      formDataForTelegram.append(fieldName, value);
+    } else {
+      const input = form.querySelector(`[name="${fieldName}"]`);
+      const value = input ? (input.type === 'radio' ? (input.checked ? input.value : '') : input.value) : '';
+      formDataForTelegram.append(fieldName, value);
+    }
   });
 
   // Отправка в Telegram
