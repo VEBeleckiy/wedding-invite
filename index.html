@@ -45,21 +45,21 @@
         
         <!-- Таймер обратного отсчета -->
         <div class="countdown-section">
-          <div class="countdown-timer" id="countdown">
+          <div class="countdown-timer" id="hero-countdown">
             <div class="countdown-item">
-              <span class="number" id="weeks">0</span>
+              <span class="number" id="hero-weeks">0</span>
               <span class="label">недель</span>
             </div>
             <div class="countdown-item">
-              <span class="number" id="days">0</span>
+              <span class="number" id="hero-days">0</span>
               <span class="label">дней</span>
             </div>
             <div class="countdown-item">
-              <span class="number" id="hours">0</span>
+              <span class="number" id="hero-hours">0</span>
               <span class="label">часов</span>
             </div>
             <div class="countdown-item">
-              <span class="number" id="minutes">0</span>
+              <span class="number" id="hero-minutes">0</span>
               <span class="label">минут</span>
             </div>
           </div>
@@ -105,7 +105,7 @@
         </div>
         
         <div class="event-details">
-          <p>25.10.2025 в 18:00</p>
+          <p>25.10.2025 в 17:30</p>
           <p>Советская 78А</p>
         </div>
       </div>
@@ -168,12 +168,10 @@
         <div class="confirmation-section">
           <h3 class="confirmation-title">
             ПОДТВЕРЖДЕНИЕ
-            <span class="blue-dot"></span>
           </h3>
           <p class="confirmation-text">
-            <span class="underlined">Пожалуйста подтвердите свое</span><br>
+            Пожалуйста подтвердите свое<br>
             присутствие до 01.10.2025
-            <span class="red-dot"></span>
           </p>
         </div>
         
@@ -182,8 +180,7 @@
           <p class="photo-text">
             Опубликуйте фото дня нашей<br>
             свадьбы в группе телеграмм.<br>
-            <span class="underlined">ссылка</span>
-            <span class="red-dot"></span>
+            ссылка
           </p>
         </div>
         
@@ -199,10 +196,7 @@
         </div>
         
         <div class="dress-code-video">
-          <video controls autoplay muted loop style="max-width: 100%; height: auto; border-radius: 8px;">
-            <source src="dress_code.MP4" type="video/mp4">
-            Ваш браузер не поддерживает видео.
-          </video>
+          <img src="dress_code.png" alt="Дресс-код" style="max-width: 100%; height: auto; border-radius: 8px;">
         </div>
       </div>
 
@@ -245,109 +239,95 @@
         </div>
       </div>
 
-      <!-- Дресс-код -->
-      <div class="dress-code">
-        <h3 class="dress-code-title">Дресс-код</h3>
-        <p>Будем благодарны, если сможете добавить в ваш образ элементы данной цветовой палитры</p>
-        <div class="color-palette" style="display: flex; justify-content: center; align-items: center; background: transparent; box-shadow: none;">
-          <img src="палитра.png" alt="Цветовая палитра" style="max-width: 260px; width: 100%; height: auto; border-radius: 16px;">
-        </div>
-        <div style="font-size: 0.95em; color: #888; margin-top: 8px;">Палитра для вдохновения</div>
-      </div>
-
-      <!-- Таймер обратного отсчета -->
-      <div class="countdown">
-        <h3 class="countdown-title">До нашей встречи</h3>
-        <div class="countdown-timer" id="countdown">
-          <span class="countdown-item">
-            <span class="number" id="days">0</span>
-            <span class="label">дней</span>
-          </span>
-          <span class="countdown-item">
-            <span class="number" id="hours">0</span>
-            <span class="label">часов</span>
-          </span>
-          <span class="countdown-item">
-            <span class="number" id="minutes">0</span>
-            <span class="label">минут</span>
-          </span>
-          <span class="countdown-item">
-            <span class="number" id="seconds">0</span>
-            <span class="label">секунд</span>
-          </span>
-        </div>
-      </div>
-
       <!-- Анкета гостя -->
       <div class="guest-form">
         <h3 class="form-title">Анкета гостя</h3>
-        <form id="rsvp-form">
-          <div class="form-group">
-            <label for="name">Имя и фамилия</label>
-            <input type="text" id="name" name="name" required>
-          </div>
-
-          <div class="form-group">
-            <label>Подтвердите присутствие</label>
-            <div class="radio-group">
-              <label class="radio-option">
-                <input type="radio" name="willAttend" value="Обязательно буду!" required>
-                <span>Обязательно буду!</span>
-              </label>
-              <label class="radio-option">
-                <input type="radio" name="willAttend" value="К сожалению, не смогу">
-                <span>К сожалению, не смогу</span>
-              </label>
+        <div id="forms-container">
+          <form id="rsvp-form" class="guest-form-single" data-form-index="0">
+            <div class="form-group">
+              <label for="name-0">Имя и фамилия</label>
+              <input type="text" id="name-0" name="name" required>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label for="allergies">Есть ли аллергические реакции?</label>
-            <textarea id="allergies" name="allergies" placeholder="Если да, то напишите какие, чтобы мы позаботились о вас."></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="creative">Планируете поздравлять творчески?</label>
-            <textarea id="creative" name="creative" placeholder="Если да то оставьте ваш номер телефона."></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Ваши предпочтения по напиткам</label>
-            <div class="radio-group">
-              <label class="radio-option">
-                <input type="radio" name="drink" value="Крепкий алкоголь">
-                <span>Крепкий алкоголь</span>
-              </label>
-              <label class="radio-option">
-                <input type="radio" name="drink" value="Красное вино">
-                <span>Красное вино</span>
-              </label>
-              <label class="radio-option">
-                <input type="radio" name="drink" value="Белое вино">
-                <span>Белое вино</span>
-              </label>
-              <label class="radio-option">
-                <input type="radio" name="drink" value="Безалкогольные напитки">
-                <span>Безалкогольные напитки</span>
-              </label>
+            <div class="form-group attendance-group">
+              <label>Подтвердите присутствие</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="willAttend" value="Обязательно буду!" required>
+                  <span>Обязательно буду!</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="willAttend" value="К сожалению, не смогу">
+                  <span>К сожалению, не смогу</span>
+                </label>
+              </div>
             </div>
-          </div>
 
-          <button type="submit" class="submit-btn">ОТПРАВИТЬ</button>
-        </form>
-      </div>
+            <div class="form-group">
+              <label>Будет ли с вами на празднике ребенок?</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="hasChildren" value="да" required>
+                  <span>Да</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="hasChildren" value="нет" required>
+                  <span>Нет</span>
+                </label>
+              </div>
+            </div>
 
-      <!-- Заключительное изображение -->
-      <div class="final-image">
-        <div class="polaroid final">
-          <div class="photo-frame">
-            <img src="молодожены.jpg" alt="Молодожены" class="couple-photo">
-            <!-- Если фото нет, показываем эмодзи -->
-            <div class="photo-placeholder" style="display: none;">💕</div>
-          </div>
+            <div class="form-group children-fields" style="display: none;">
+              <label for="childrenCount-0">Сколько детей?</label>
+              <input type="number" id="childrenCount-0" name="childrenCount" min="1" max="10">
+            </div>
+
+            <div class="form-group children-fields" style="display: none;">
+              <label for="childrenAge-0">Какого возраста?</label>
+              <textarea id="childrenAge-0" name="childrenAge" placeholder="Например: 5 лет, 8 лет"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="allergies-0">Есть ли аллергические реакции?</label>
+              <textarea id="allergies-0" name="allergies" placeholder="Если да, то напишите какие, чтобы мы позаботились о вас."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="creative-0">Планируете поздравлять творчески?</label>
+              <textarea id="creative-0" name="creative" placeholder="Если да то оставьте ваш номер телефона."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Ваши предпочтения по напиткам</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="drink" value="Крепкий алкоголь">
+                  <span>Крепкий алкоголь</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="drink" value="Красное вино">
+                  <span>Красное вино</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="drink" value="Белое вино">
+                  <span>Белое вино</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="drink" value="Безалкогольные напитки">
+                  <span>Безалкогольные напитки</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-buttons">
+              <button type="button" class="add-guest-btn">Добавить гостя</button>
+              <button type="submit" class="submit-btn">ОТПРАВИТЬ</button>
+            </div>
+          </form>
         </div>
-        <p class="final-message">С нетерпением ждём!</p>
       </div>
+
+
     </div>
 
     <!-- Сообщение об успешной отправке -->

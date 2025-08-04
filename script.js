@@ -53,37 +53,40 @@ function updateCountdown() {
     const days = Math.floor((difference % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
     const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
     // Обновляем элементы таймера в hero секции
-    const weeksElement = document.getElementById('weeks');
-    const daysElement = document.getElementById('days');
-    const hoursElement = document.getElementById('hours');
-    const minutesElement = document.getElementById('minutes');
+    const heroWeeksElement = document.getElementById('hero-weeks');
+    const heroDaysElement = document.getElementById('hero-days');
+    const heroHoursElement = document.getElementById('hero-hours');
+    const heroMinutesElement = document.getElementById('hero-minutes');
     
-    if (weeksElement) weeksElement.textContent = weeks;
-    if (daysElement) daysElement.textContent = days;
-    if (hoursElement) hoursElement.textContent = hours;
-    if (minutesElement) minutesElement.textContent = minutes;
+    if (heroWeeksElement) heroWeeksElement.textContent = weeks;
+    if (heroDaysElement) heroDaysElement.textContent = days;
+    if (heroHoursElement) heroHoursElement.textContent = hours;
+    if (heroMinutesElement) heroMinutesElement.textContent = minutes;
     
-    // Также обновляем старый таймер если он есть
-    const oldDaysElement = document.querySelector('#countdown .countdown-item:nth-child(1) .number');
-    const oldHoursElement = document.querySelector('#countdown .countdown-item:nth-child(2) .number');
-    const oldMinutesElement = document.querySelector('#countdown .countdown-item:nth-child(3) .number');
-    const oldSecondsElement = document.querySelector('#countdown .countdown-item:nth-child(4) .number');
+    // Обновляем основной таймер
+    const mainDaysElement = document.getElementById('main-days');
+    const mainHoursElement = document.getElementById('main-hours');
+    const mainMinutesElement = document.getElementById('main-minutes');
+    const mainSecondsElement = document.getElementById('main-seconds');
     
-    if (oldDaysElement) oldDaysElement.textContent = days;
-    if (oldHoursElement) oldHoursElement.textContent = hours;
-    if (oldMinutesElement) oldMinutesElement.textContent = minutes;
-    if (oldSecondsElement) {
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      oldSecondsElement.textContent = seconds;
-    }
+    if (mainDaysElement) mainDaysElement.textContent = days;
+    if (mainHoursElement) mainHoursElement.textContent = hours;
+    if (mainMinutesElement) mainMinutesElement.textContent = minutes;
+    if (mainSecondsElement) mainSecondsElement.textContent = seconds;
   } else {
     // Если свадьба уже прошла
-    const countdownElements = document.querySelectorAll('#countdown, .countdown-section');
-    countdownElements.forEach(element => {
-      element.innerHTML = '<p style="font-size: 1.2rem; color: #000;">Сегодня наш день! 🎉</p>';
-    });
+    const heroCountdown = document.getElementById('hero-countdown');
+    const mainCountdown = document.getElementById('main-countdown');
+    
+    if (heroCountdown) {
+      heroCountdown.innerHTML = '<p style="font-size: 1.2rem; color: #000;">Сегодня наш день! 🎉</p>';
+    }
+    if (mainCountdown) {
+      mainCountdown.innerHTML = '<p style="font-size: 1.2rem; color: #000;">Сегодня наш день! 🎉</p>';
+    }
   }
 }
 
@@ -91,9 +94,147 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown(); // Запускаем сразу
 
-// Обработка формы
-const rsvpForm = document.getElementById('rsvp-form');
-const submitBtn = rsvpForm.querySelector('.submit-btn');
+// Обработка полей с детьми
+function handleChildrenFields() {
+  document.addEventListener('change', function(e) {
+    if (e.target.name === 'hasChildren') {
+      const form = e.target.closest('form');
+      const childrenFields = form.querySelectorAll('.children-fields');
+      
+      if (e.target.value === 'да') {
+        childrenFields.forEach(field => {
+          field.style.display = 'block';
+        });
+      } else {
+        childrenFields.forEach(field => {
+          field.style.display = 'none';
+          // Очищаем поля
+          const inputs = field.querySelectorAll('input, textarea');
+          inputs.forEach(input => input.value = '');
+        });
+      }
+    }
+  });
+}
+
+// Функция для создания новой формы гостя
+function createGuestForm(index) {
+  const isAdditionalGuest = index > 0;
+  const attendanceGroup = isAdditionalGuest ? '' : `
+    <div class="form-group attendance-group">
+      <label>Подтвердите присутствие</label>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="willAttend" value="Обязательно буду!" required>
+          <span>Обязательно буду!</span>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="willAttend" value="К сожалению, не смогу">
+          <span>К сожалению, не смогу</span>
+        </label>
+      </div>
+    </div>
+  `;
+
+  return `
+    <form class="guest-form-single" data-form-index="${index}">
+      <div class="form-group">
+        <label for="name-${index}">Имя и фамилия</label>
+        <input type="text" id="name-${index}" name="name" required>
+      </div>
+
+      ${attendanceGroup}
+
+      <div class="form-group">
+        <label>Будет ли с вами на празднике ребенок?</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="hasChildren" value="да" required>
+            <span>Да</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="hasChildren" value="нет" required>
+            <span>Нет</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group children-fields" style="display: none;">
+        <label for="childrenCount-${index}">Сколько детей?</label>
+        <input type="number" id="childrenCount-${index}" name="childrenCount" min="1" max="10">
+      </div>
+
+      <div class="form-group children-fields" style="display: none;">
+        <label for="childrenAge-${index}">Какого возраста?</label>
+        <textarea id="childrenAge-${index}" name="childrenAge" placeholder="Например: 5 лет, 8 лет"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="allergies-${index}">Есть ли аллергические реакции?</label>
+        <textarea id="allergies-${index}" name="allergies" placeholder="Если да, то напишите какие, чтобы мы позаботились о вас."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="creative-${index}">Планируете поздравлять творчески?</label>
+        <textarea id="creative-${index}" name="creative" placeholder="Если да то оставьте ваш номер телефона."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Ваши предпочтения по напиткам</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="drink" value="Крепкий алкоголь">
+            <span>Крепкий алкоголь</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="drink" value="Красное вино">
+            <span>Красное вино</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="drink" value="Белое вино">
+            <span>Белое вино</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="drink" value="Безалкогольные напитки">
+            <span>Безалкогольные напитки</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" class="add-guest-btn">Добавить гостя</button>
+        <button type="submit" class="submit-btn">ОТПРАВИТЬ</button>
+      </div>
+    </form>
+  `;
+}
+
+// Обработка добавления гостей
+function handleAddGuest() {
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('add-guest-btn')) {
+      const formsContainer = document.getElementById('forms-container');
+      const currentForms = formsContainer.querySelectorAll('.guest-form-single');
+      const newIndex = currentForms.length;
+      
+      const newFormHTML = createGuestForm(newIndex);
+      formsContainer.insertAdjacentHTML('beforeend', newFormHTML);
+      
+      // Удаляем кнопку "Добавить гостя" из предыдущей формы
+      const previousForm = currentForms[currentForms.length - 1];
+      const previousAddBtn = previousForm.querySelector('.add-guest-btn');
+      if (previousAddBtn) {
+        previousAddBtn.remove();
+      }
+      
+      // Обновляем стили для кнопок
+      const submitBtn = previousForm.querySelector('.submit-btn');
+      if (submitBtn) {
+        submitBtn.style.flex = '1';
+      }
+    }
+  });
+}
 
 // Универсальная функция с повторными попытками
 async function retryAsync(fn, maxAttempts = 10, delay = 500) {
@@ -110,17 +251,16 @@ async function retryAsync(fn, maxAttempts = 10, delay = 500) {
   throw lastError || new Error('Не удалось выполнить операцию после нескольких попыток');
 }
 
-rsvpForm.addEventListener('submit', async e => {
-  e.preventDefault();
-  submitBtn.disabled = true;
-  const formData = new FormData(e.target);
+// Функция для отправки одной формы
+async function submitSingleForm(form) {
+  const formData = new FormData(form);
   const params = new URLSearchParams();
   
   // Собираем данные для отправки
   const dataToSend = {};
   
   // Принудительно добавляем все поля, даже пустые
-  const allFields = ['name', 'willAttend', 'allergies', 'creative', 'drink'];
+  const allFields = ['name', 'willAttend', 'hasChildren', 'childrenCount', 'childrenAge', 'allergies', 'creative', 'drink'];
   
   allFields.forEach(field => {
     const value = formData.get(field) || '';
@@ -128,83 +268,84 @@ rsvpForm.addEventListener('submit', async e => {
     dataToSend[field] = value;
   });
 
-  // Отладочная информация - показываем что отправляется
-  console.log('Данные для отправки в Google таблицу:', dataToSend);
-  console.log('URL параметры:', params.toString());
-  
   // Проверяем, что все обязательные поля заполнены
-  const requiredFields = ['name', 'willAttend'];
+  const requiredFields = ['name', 'hasChildren'];
   const missingFields = requiredFields.filter(field => !dataToSend[field]);
   
   if (missingFields.length > 0) {
-    alert('Пожалуйста, заполните все обязательные поля: ' + missingFields.join(', '));
-    submitBtn.disabled = false;
-    return;
+    throw new Error('Пожалуйста, заполните все обязательные поля: ' + missingFields.join(', '));
   }
 
-  // Retry отправка в Google таблицу
-  let googleResponse;
-  try {
-    googleResponse = await retryAsync(() => fetch('https://script.google.com/macros/s/AKfycbzr_G1g10OMvbNQ5Xb3aizFUrCnxGwqpQ-boM8suhzWX4AHK0Yay5I5_-bhpsIvGuK5/exec', {
-      method: 'POST',
-      body: params
-    }), 10, 1000);
-  } catch (err) {
-    console.error('Ошибка отправки в Google таблицу:', err);
-    alert('Ошибка, попробуйте позже');
-    submitBtn.disabled = false;
-    return;
+  // Отправка в Google таблицу
+  const googleResponse = await retryAsync(() => fetch('https://script.google.com/macros/s/AKfycbzr_G1g10OMvbNQ5Xb3aizFUrCnxGwqpQ-boM8suhzWX4AHK0Yay5I5_-bhpsIvGuK5/exec', {
+    method: 'POST',
+    body: params
+  }), 10, 1000);
+
+  if (!googleResponse.ok) {
+    throw new Error('Ошибка отправки в Google таблицу');
   }
 
-  if (googleResponse.ok) {
-    console.log('Данные успешно отправлены в Google таблицу');
-    
-    // Retry отправка в Telegram
-    const telegramMessage = TelegramService.formatRSVPMessage(formData);
-    let telegramSent = false;
-    try {
-      telegramSent = await retryAsync(() => TelegramService.sendMessage(telegramMessage), 10, 1000);
-    } catch (err) {
-      console.error('Ошибка отправки в Telegram:', err);
-    }
-    
-    // Показываем результат пользователю
-    const thanksElement = document.getElementById('thanks');
-    if (telegramSent) {
-      thanksElement.textContent = 'Спасибо! Ваш ответ сохранён и отправлен в Telegram.';
-    } else {
-      thanksElement.textContent = 'Спасибо! Ваш ответ сохранён.';
-    }
-    thanksElement.style.display = '';
+  // Отправка в Telegram
+  const telegramMessage = TelegramService.formatRSVPMessage(formData);
+  await retryAsync(() => TelegramService.sendMessage(telegramMessage), 10, 1000);
+  
+  return true;
+}
 
-    // Делаем все поля формы только для чтения/disabled
-    rsvpForm.querySelectorAll('input, textarea').forEach(el => {
-      if (el.type === 'radio' || el.type === 'checkbox') {
-        el.disabled = true;
-      } else {
-        el.readOnly = true;
+// Обработка отправки форм
+function handleFormSubmission() {
+  document.addEventListener('submit', async function(e) {
+    if (e.target.classList.contains('guest-form-single')) {
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('.submit-btn');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Отправка...';
+      
+      try {
+        await submitSingleForm(e.target);
+        
+        // Показываем результат пользователю
+        const thanksElement = document.getElementById('thanks');
+        thanksElement.textContent = 'Спасибо! Ваш ответ сохранён и отправлен в Telegram.';
+        thanksElement.style.display = '';
+
+        // Делаем все поля формы только для чтения/disabled
+        e.target.querySelectorAll('input, textarea').forEach(el => {
+          if (el.type === 'radio' || el.type === 'checkbox') {
+            el.disabled = true;
+          } else {
+            el.readOnly = true;
+          }
+        });
+        
+        // Удаляем кнопки
+        const buttons = e.target.querySelectorAll('button');
+        buttons.forEach(btn => btn.remove());
+
+        setTimeout(() => {
+          thanksElement.style.display = 'none';
+        }, 3000);
+        
+      } catch (error) {
+        console.error('Ошибка отправки:', error);
+        alert(error.message || 'Ошибка, попробуйте позже');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
       }
-    });
-    submitBtn.classList.add('sent'); // на всякий случай для кастомных стилей
-    submitBtn.disabled = true;
-
-    setTimeout(() => {
-      thanksElement.style.display = 'none';
-    }, 3000);
-    // e.target.reset(); // Не сбрасываем, чтобы показать введённые данные
-  } else {
-    console.error('Ошибка отправки в Google таблицу:', googleResponse.status, googleResponse.statusText);
-    const responseText = await googleResponse.text();
-    console.error('Ответ сервера:', responseText);
-    alert('Ошибка, попробуйте позже');
-    submitBtn.disabled = false;
-  }
-});
+    }
+  });
+}
 
 // Инициализация обработки фотографий и адаптации размера шрифта после загрузки страницы
 document.addEventListener('DOMContentLoaded', function() {
   handleImageLoad();
   adjustFontSize();
+  handleChildrenFields();
+  handleAddGuest();
+  handleFormSubmission();
   
   // Адаптируем размер при изменении размера окна
   window.addEventListener('resize', adjustFontSize);

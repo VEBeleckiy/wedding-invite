@@ -42,6 +42,9 @@ async function sendTelegramMessage(message) {
 function formatRSVPMessage(formData) {
   const name = formData.get('name');
   const willAttend = formData.get('willAttend');
+  const hasChildren = formData.get('hasChildren');
+  const childrenCount = formData.get('childrenCount');
+  const childrenAge = formData.get('childrenAge');
   const allergies = formData.get('allergies');
   const creative = formData.get('creative');
   const drink = formData.get('drink');
@@ -50,6 +53,9 @@ function formatRSVPMessage(formData) {
   console.log('Данные для Telegram сообщения:', {
     name,
     willAttend,
+    hasChildren,
+    childrenCount,
+    childrenAge,
     allergies,
     creative,
     drink
@@ -65,6 +71,18 @@ function formatRSVPMessage(formData) {
 ${emoji} <b>Статус:</b> ${status}
 🍷 <b>Напиток:</b> ${drink || 'Не указано'}`;
 
+  if (hasChildren === 'да') {
+    message += `\n👶 <b>Дети:</b> Да`;
+    if (childrenCount) {
+      message += ` (${childrenCount} ${childrenCount === '1' ? 'ребёнок' : childrenCount < '5' ? 'ребёнка' : 'детей'})`;
+    }
+    if (childrenAge) {
+      message += `\n📏 <b>Возраст детей:</b> ${childrenAge}`;
+    }
+  } else {
+    message += `\n👶 <b>Дети:</b> Нет`;
+  }
+
   if (allergies && allergies.trim()) {
     message += `\n⚠️ <b>Аллергии:</b> ${allergies}`;
   }
@@ -75,7 +93,7 @@ ${emoji} <b>Статус:</b> ${status}
 
   message += `
 
-    📅 Дата: 25.10.2025 в 18:00
+📅 Дата: 25.10.2025 в 18:00
 📍 Место: Zagarro Club Resort, Краснодар
 
 ⏰ Время отправки: ${new Date().toLocaleString('ru-RU')}`;

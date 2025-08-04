@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background: #f8f8f8;
+  background: #f1f1f1;
   color: #000000;
   line-height: 1.6;
   font-size: 16px;
@@ -21,7 +21,7 @@ html, body {
 .container {
   max-width: 100%;
   margin: 0 auto;
-  background: #f8f8f8;
+  background: #f1f1f1;
 }
 
 /* Header */
@@ -69,7 +69,7 @@ html, body {
   text-align: center;
   padding: 5px 5px;
   position: relative;
-  background: #f8f8f8;
+  background: #f1f1f1;
 }
 
 .hero-text {
@@ -593,7 +593,7 @@ html, body {
     margin-top: 10px;
   }
   
-  .dress-code-video video {
+  .dress-code-video img {
     max-width: 80%;
   }
   
@@ -733,7 +733,7 @@ html, body {
 }
 
 .gift-wishes-content {
-  text-align: left;
+  text-align: center;
   max-width: 600px;
   margin: 0 auto 20px auto;
 }
@@ -748,7 +748,7 @@ html, body {
 }
 
 .note-section {
-  text-align: left;
+  text-align: center;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -782,7 +782,7 @@ html, body {
   color: #2c3e50;
   line-height: 1.6;
   font-style: italic;
-  text-align: left;
+  text-align: center;
 }
 
 
@@ -836,11 +836,6 @@ html, body {
   vertical-align: middle;
 }
 
-.underlined {
-  text-decoration: underline;
-  text-decoration-color: #ff6b35;
-  text-decoration-thickness: 2px;
-}
 
 .photo-section {
   margin: 20px 0;
@@ -890,7 +885,7 @@ html, body {
 }
 
 .dress-code-note {
-  text-align: left;
+  text-align: center;
   margin-top: 20px;
   max-width: 600px;
   margin-left: auto;
@@ -911,7 +906,7 @@ html, body {
   text-align: center;
 }
 
-.dress-code-video video {
+.dress-code-video img {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
@@ -1210,6 +1205,25 @@ html, body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+.guest-form-single {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.guest-form-single:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.children-fields {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+  margin-top: 10px;
+}
+
 .form-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
@@ -1277,8 +1291,32 @@ html, body {
   transform: scale(1.2);
 }
 
+.form-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.add-guest-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.3s;
+  flex: 1;
+}
+
+.add-guest-btn:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
 .submit-btn {
-  width: 100%;
+  flex: 1;
   padding: 15px;
   background: linear-gradient(135deg, #e74c3c, #f39c12);
   color: white;
@@ -1540,8 +1578,18 @@ html, body {
     margin-top: 15px;
   }
   
-  .dress-code-video video {
+  .dress-code-video img {
     max-width: 90%;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .add-guest-btn,
+  .submit-btn {
+    width: 100%;
   }
   
 
