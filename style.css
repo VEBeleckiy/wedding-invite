@@ -374,7 +374,7 @@ html, body {
   }
   
   .invitation-block {
-    margin: 30px 0;
+    margin: 30px 0 6px 0;
     padding: 20px 10px;
   }
   
@@ -397,7 +397,7 @@ html, body {
   }
   
   .couple-profiles {
-    margin: 30px 0;
+    margin: 6px 0 30px 0;
     padding: 20px 10px;
   }
   
@@ -464,6 +464,14 @@ html, body {
     font-size: 1.8rem;
   }
   
+  .dress-code-video {
+    margin-top: 12px;
+  }
+  
+  .dress-code-video video {
+    max-width: 85%;
+  }
+  
 
 }
 
@@ -491,7 +499,7 @@ html, body {
   }
   
   .invitation-block {
-    margin: 20px 0;
+    margin: 20px 0 4px 0;
     padding: 15px 8px;
   }
   
@@ -514,7 +522,7 @@ html, body {
   }
   
   .couple-profiles {
-    margin: 20px 0;
+    margin: 4px 0 20px 0;
     padding: 15px 8px;
   }
   
@@ -581,13 +589,21 @@ html, body {
     font-size: 1.6rem;
   }
   
+  .dress-code-video {
+    margin-top: 10px;
+  }
+  
+  .dress-code-video video {
+    max-width: 80%;
+  }
+  
 
 }
 
 /* Второй блок - Приглашение */
 .invitation-block {
   text-align: center;
-  margin: 60px 0;÷
+  margin: 60px 0 10px 0;
   padding: 40px 20px;
 }
 
@@ -638,7 +654,7 @@ html, body {
 /* Третий блок - Фотографии жениха и невесты */
 .couple-profiles {
   text-align: center;
-  margin: 60px 0;
+  margin: 10px 0 60px 0;
   padding: 40px 20px;
 }
 
@@ -888,6 +904,18 @@ html, body {
   color: #888;
   margin-bottom: 8px;
   line-height: 1.6;
+}
+
+.dress-code-video {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.dress-code-video video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
 
@@ -1410,7 +1438,7 @@ html, body {
   }
   
   .invitation-block {
-    margin: 40px 0;
+    margin: 40px 0 8px 0;
     padding: 30px 15px;
   }
   
@@ -1441,7 +1469,7 @@ html, body {
   }
   
   .couple-profiles {
-    margin: 40px 0;
+    margin: 8px 0 40px 0;
     padding: 30px 15px;
   }
   
@@ -1506,6 +1534,14 @@ html, body {
   
   .closing-line-2 {
     font-size: 2rem;
+  }
+  
+  .dress-code-video {
+    margin-top: 15px;
+  }
+  
+  .dress-code-video video {
+    max-width: 90%;
   }
   
 
