@@ -120,7 +120,21 @@ function handleChildrenFields() {
 // Функция для создания новой формы гостя
 function createGuestForm(index) {
   const isAdditionalGuest = index > 0;
-  const attendanceGroup = isAdditionalGuest ? '' : `
+  const attendanceGroup = isAdditionalGuest ? `
+    <div class="form-group attendance-group">
+      <label>Подтвердите присутствие</label>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="willAttend_${index}" value="Обязательно буду!" required checked>
+          <span>Обязательно буду!</span>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="willAttend_${index}" value="К сожалению, не смогу">
+          <span>К сожалению, не смогу</span>
+        </label>
+      </div>
+    </div>
+  ` : `
     <div class="form-group attendance-group">
       <label>Подтвердите присутствие</label>
       <div class="radio-group">
@@ -149,11 +163,11 @@ function createGuestForm(index) {
         <label>Будет ли с вами на празднике ребенок?</label>
         <div class="radio-group">
           <label class="radio-option">
-            <input type="radio" name="hasChildren_${index}" value="да" required>
+            <input type="radio" name="hasChildren_${index}" value="да">
             <span>Да</span>
           </label>
           <label class="radio-option">
-            <input type="radio" name="hasChildren_${index}" value="нет" required checked>
+            <input type="radio" name="hasChildren_${index}" value="нет" checked>
             <span>Нет</span>
           </label>
         </div>
@@ -208,6 +222,19 @@ function createGuestForm(index) {
   `;
 }
 
+// Функция для обновления текста кнопки отправки
+function updateSubmitButtonText() {
+  const formsContainer = document.getElementById('forms-container');
+  const forms = formsContainer.querySelectorAll('.guest-form-single');
+  const submitBtn = document.querySelector('.submit-all-btn');
+  
+  if (forms.length === 1) {
+    submitBtn.textContent = 'ОТПРАВИТЬ';
+  } else {
+    submitBtn.textContent = 'ОТПРАВИТЬ ВСЕ АНКЕТЫ';
+  }
+}
+
 // Обработка добавления гостей
 function handleAddGuest() {
   document.addEventListener('click', function(e) {
@@ -226,11 +253,8 @@ function handleAddGuest() {
         previousAddBtn.remove();
       }
       
-      // Обновляем стили для кнопок
-      const submitBtn = previousForm.querySelector('.submit-btn');
-      if (submitBtn) {
-        submitBtn.style.flex = '1';
-      }
+      // Обновляем текст кнопки отправки
+      updateSubmitButtonText();
     }
   });
 }
@@ -272,7 +296,7 @@ async function submitSingleForm(form) {
   });
 
   // Проверяем, что все обязательные поля заполнены
-  const requiredFields = ['name', 'hasChildren'];
+  const requiredFields = ['name'];
   const missingFields = requiredFields.filter(field => !dataToSend[field]);
   
   if (missingFields.length > 0) {
@@ -312,7 +336,6 @@ function validateForm(form) {
   
   // Проверяем обязательные поля
   const nameField = form.querySelector(`[name="name_${formIndex}"]`);
-  const hasChildrenField = form.querySelector(`[name="hasChildren_${formIndex}"]:checked`);
   
   // Сбрасываем стили ошибок
   form.querySelectorAll('.form-group').forEach(group => {
@@ -322,11 +345,6 @@ function validateForm(form) {
   if (!nameField.value.trim()) {
     errors.push('Имя и фамилия');
     nameField.closest('.form-group').classList.add('error');
-  }
-  
-  if (!hasChildrenField) {
-    errors.push('Будет ли с вами на празднике ребенок?');
-    form.querySelector('.form-group:has(input[name*="hasChildren"])').classList.add('error');
   }
   
   return errors;
@@ -391,7 +409,7 @@ async function submitAllForms() {
     console.error('Ошибка отправки:', error);
     alert(error.message || 'Ошибка, попробуйте позже');
     submitBtn.disabled = false;
-    submitBtn.textContent = 'ОТПРАВИТЬ ВСЕ АНКЕТЫ';
+    updateSubmitButtonText(); // Восстанавливаем правильный текст кнопки
   }
 }
 
@@ -460,6 +478,7 @@ document.addEventListener('DOMContentLoaded', function() {
   handleAddGuest();
   handleFormSubmission();
   handleWillNotAttend();
+  updateSubmitButtonText(); // Устанавливаем правильный текст кнопки при загрузке
   
   // Адаптируем размер при изменении размера окна
   window.addEventListener('resize', adjustFontSize);
