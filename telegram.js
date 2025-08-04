@@ -40,14 +40,31 @@ async function sendTelegramMessage(message) {
 
 // Функция для форматирования сообщения о RSVP
 function formatRSVPMessage(formData) {
-  const name = formData.get('name');
-  const willAttend = formData.get('willAttend');
-  const hasChildren = formData.get('hasChildren');
-  const childrenCount = formData.get('childrenCount');
-  const childrenAge = formData.get('childrenAge');
-  const allergies = formData.get('allergies');
-  const creative = formData.get('creative');
-  const drink = formData.get('drink');
+  // Получаем все ключи из FormData
+  const keys = Array.from(formData.keys());
+  
+  // Находим данные для текущей формы
+  let name = '', willAttend = '', hasChildren = '', childrenCount = '', childrenAge = '', allergies = '', creative = '', drink = '';
+  
+  keys.forEach(key => {
+    if (key === 'name' || key.startsWith('name_')) {
+      name = formData.get(key);
+    } else if (key === 'willAttend' || key.startsWith('willAttend_')) {
+      willAttend = formData.get(key);
+    } else if (key === 'hasChildren' || key.startsWith('hasChildren_')) {
+      hasChildren = formData.get(key);
+    } else if (key === 'childrenCount' || key.startsWith('childrenCount_')) {
+      childrenCount = formData.get(key);
+    } else if (key === 'childrenAge' || key.startsWith('childrenAge_')) {
+      childrenAge = formData.get(key);
+    } else if (key === 'allergies' || key.startsWith('allergies_')) {
+      allergies = formData.get(key);
+    } else if (key === 'creative' || key.startsWith('creative_')) {
+      creative = formData.get(key);
+    } else if (key === 'drink' || key.startsWith('drink_')) {
+      drink = formData.get(key);
+    }
+  });
   
   // Отладочная информация
   console.log('Данные для Telegram сообщения:', {

@@ -97,7 +97,7 @@ updateCountdown(); // Запускаем сразу
 // Обработка полей с детьми
 function handleChildrenFields() {
   document.addEventListener('change', function(e) {
-    if (e.target.name === 'hasChildren') {
+    if (e.target.name && e.target.name.startsWith('hasChildren_')) {
       const form = e.target.closest('form');
       const childrenFields = form.querySelectorAll('.children-fields');
       
@@ -125,11 +125,11 @@ function createGuestForm(index) {
       <label>Подтвердите присутствие</label>
       <div class="radio-group">
         <label class="radio-option">
-          <input type="radio" name="willAttend" value="Обязательно буду!" required>
+          <input type="radio" name="willAttend_${index}" value="Обязательно буду!" required>
           <span>Обязательно буду!</span>
         </label>
         <label class="radio-option">
-          <input type="radio" name="willAttend" value="К сожалению, не смогу">
+          <input type="radio" name="willAttend_${index}" value="К сожалению, не смогу">
           <span>К сожалению, не смогу</span>
         </label>
       </div>
@@ -140,7 +140,7 @@ function createGuestForm(index) {
     <form class="guest-form-single" data-form-index="${index}">
       <div class="form-group">
         <label for="name-${index}">Имя и фамилия</label>
-        <input type="text" id="name-${index}" name="name" required>
+        <input type="text" id="name-${index}" name="name_${index}" required>
       </div>
 
       ${attendanceGroup}
@@ -149,11 +149,11 @@ function createGuestForm(index) {
         <label>Будет ли с вами на празднике ребенок?</label>
         <div class="radio-group">
           <label class="radio-option">
-            <input type="radio" name="hasChildren" value="да" required>
+            <input type="radio" name="hasChildren_${index}" value="да" required>
             <span>Да</span>
           </label>
           <label class="radio-option">
-            <input type="radio" name="hasChildren" value="нет" required>
+            <input type="radio" name="hasChildren_${index}" value="нет" required>
             <span>Нет</span>
           </label>
         </div>
@@ -161,41 +161,41 @@ function createGuestForm(index) {
 
       <div class="form-group children-fields" style="display: none;">
         <label for="childrenCount-${index}">Сколько детей?</label>
-        <input type="number" id="childrenCount-${index}" name="childrenCount" min="1" max="10">
+        <input type="number" id="childrenCount-${index}" name="childrenCount_${index}" min="1" max="10">
       </div>
 
       <div class="form-group children-fields" style="display: none;">
         <label for="childrenAge-${index}">Какого возраста?</label>
-        <textarea id="childrenAge-${index}" name="childrenAge" placeholder="Например: 5 лет, 8 лет"></textarea>
+        <textarea id="childrenAge-${index}" name="childrenAge_${index}" placeholder="Например: 5 лет, 8 лет"></textarea>
       </div>
 
       <div class="form-group">
         <label for="allergies-${index}">Есть ли аллергические реакции?</label>
-        <textarea id="allergies-${index}" name="allergies" placeholder="Если да, то напишите какие, чтобы мы позаботились о вас."></textarea>
+        <textarea id="allergies-${index}" name="allergies_${index}" placeholder="Если да, то напишите какие, чтобы мы позаботились о вас."></textarea>
       </div>
 
       <div class="form-group">
         <label for="creative-${index}">Планируете поздравлять творчески?</label>
-        <textarea id="creative-${index}" name="creative" placeholder="Если да то оставьте ваш номер телефона."></textarea>
+        <textarea id="creative-${index}" name="creative_${index}" placeholder="Если да то оставьте ваш номер телефона."></textarea>
       </div>
 
       <div class="form-group">
         <label>Ваши предпочтения по напиткам</label>
         <div class="radio-group">
           <label class="radio-option">
-            <input type="radio" name="drink" value="Крепкий алкоголь">
+            <input type="radio" name="drink_${index}" value="Крепкий алкоголь">
             <span>Крепкий алкоголь</span>
           </label>
           <label class="radio-option">
-            <input type="radio" name="drink" value="Красное вино">
+            <input type="radio" name="drink_${index}" value="Красное вино">
             <span>Красное вино</span>
           </label>
           <label class="radio-option">
-            <input type="radio" name="drink" value="Белое вино">
+            <input type="radio" name="drink_${index}" value="Белое вино">
             <span>Белое вино</span>
           </label>
           <label class="radio-option">
-            <input type="radio" name="drink" value="Безалкогольные напитки">
+            <input type="radio" name="drink_${index}" value="Безалкогольные напитки">
             <span>Безалкогольные напитки</span>
           </label>
         </div>
@@ -253,18 +253,22 @@ async function retryAsync(fn, maxAttempts = 10, delay = 500) {
 
 // Функция для отправки одной формы
 async function submitSingleForm(form) {
-  const formData = new FormData(form);
   const params = new URLSearchParams();
   
-  // Собираем данные для отправки
+  // Получаем индекс формы
+  const formIndex = form.getAttribute('data-form-index');
+  
+  // Собираем данные только из текущей формы
   const dataToSend = {};
   
   // Принудительно добавляем все поля, даже пустые
   const allFields = ['name', 'willAttend', 'hasChildren', 'childrenCount', 'childrenAge', 'allergies', 'creative', 'drink'];
   
   allFields.forEach(field => {
-    const value = formData.get(field) || '';
-    params.append(field, value);
+    const fieldName = field === 'name' ? `name_${formIndex}` : `${field}_${formIndex}`;
+    const input = form.querySelector(`[name="${fieldName}"]`);
+    const value = input ? (input.type === 'radio' ? (input.checked ? input.value : '') : input.value) : '';
+    params.append(field, value); // Отправляем в таблицу с оригинальными именами
     dataToSend[field] = value;
   });
 
@@ -286,8 +290,17 @@ async function submitSingleForm(form) {
     throw new Error('Ошибка отправки в Google таблицу');
   }
 
+  // Создаем FormData только для текущей формы для Telegram
+  const formDataForTelegram = new FormData();
+  allFields.forEach(field => {
+    const fieldName = field === 'name' ? `name_${formIndex}` : `${field}_${formIndex}`;
+    const input = form.querySelector(`[name="${fieldName}"]`);
+    const value = input ? (input.type === 'radio' ? (input.checked ? input.value : '') : input.value) : '';
+    formDataForTelegram.append(fieldName, value);
+  });
+
   // Отправка в Telegram
-  const telegramMessage = TelegramService.formatRSVPMessage(formData);
+  const telegramMessage = TelegramService.formatRSVPMessage(formDataForTelegram);
   await retryAsync(() => TelegramService.sendMessage(telegramMessage), 10, 1000);
   
   return true;
@@ -339,6 +352,65 @@ function handleFormSubmission() {
   });
 }
 
+// Обработка выбора "не смогу"
+function handleWillNotAttend() {
+  document.addEventListener('change', function(e) {
+    if (e.target.name && e.target.name.startsWith('willAttend_') && e.target.value === 'К сожалению, не смогу') {
+      const form = e.target.closest('form');
+      
+      // Скрываем все поля кроме имени и подтверждения присутствия
+      const fieldsToHide = form.querySelectorAll('.form-group:not(:has(input[name*="name"])):not(:has(input[name*="willAttend"]))');
+      fieldsToHide.forEach(field => {
+        field.style.display = 'none';
+        // Очищаем скрытые поля
+        const inputs = field.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+          if (input.type === 'radio') {
+            input.checked = false;
+          } else {
+            input.value = '';
+          }
+        });
+      });
+      
+      // Скрываем кнопку "Добавить гостя"
+      const addGuestBtn = form.querySelector('.add-guest-btn');
+      if (addGuestBtn) {
+        addGuestBtn.style.display = 'none';
+      }
+      
+      // Расширяем кнопку "ОТПРАВИТЬ"
+      const submitBtn = form.querySelector('.submit-btn');
+      if (submitBtn) {
+        submitBtn.style.flex = '1';
+      }
+    } else if (e.target.name && e.target.name.startsWith('willAttend_') && e.target.value === 'Обязательно буду!') {
+      const form = e.target.closest('form');
+      
+      // Показываем все поля обратно
+      const fieldsToShow = form.querySelectorAll('.form-group');
+      fieldsToShow.forEach(field => {
+        field.style.display = 'block';
+      });
+      
+      // Показываем кнопку "Добавить гостя" только в первой форме
+      const formIndex = form.getAttribute('data-form-index');
+      if (formIndex === '0') {
+        const addGuestBtn = form.querySelector('.add-guest-btn');
+        if (addGuestBtn) {
+          addGuestBtn.style.display = 'block';
+        }
+      }
+      
+      // Восстанавливаем стили кнопок
+      const submitBtn = form.querySelector('.submit-btn');
+      if (submitBtn) {
+        submitBtn.style.flex = '1';
+      }
+    }
+  });
+}
+
 // Инициализация обработки фотографий и адаптации размера шрифта после загрузки страницы
 document.addEventListener('DOMContentLoaded', function() {
   handleImageLoad();
@@ -346,6 +418,7 @@ document.addEventListener('DOMContentLoaded', function() {
   handleChildrenFields();
   handleAddGuest();
   handleFormSubmission();
+  handleWillNotAttend();
   
   // Адаптируем размер при изменении размера окна
   window.addEventListener('resize', adjustFontSize);
