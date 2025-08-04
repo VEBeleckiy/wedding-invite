@@ -153,7 +153,7 @@ function createGuestForm(index) {
             <span>Да</span>
           </label>
           <label class="radio-option">
-            <input type="radio" name="hasChildren_${index}" value="нет" required>
+            <input type="radio" name="hasChildren_${index}" value="нет" required checked>
             <span>Нет</span>
           </label>
         </div>
@@ -203,7 +203,6 @@ function createGuestForm(index) {
 
       <div class="form-buttons">
         <button type="button" class="add-guest-btn">Добавить гостя</button>
-        <button type="submit" class="submit-btn">ОТПРАВИТЬ</button>
       </div>
     </form>
   `;
@@ -306,48 +305,102 @@ async function submitSingleForm(form) {
   return true;
 }
 
-// Обработка отправки форм
+// Валидация формы
+function validateForm(form) {
+  const errors = [];
+  const formIndex = form.getAttribute('data-form-index');
+  
+  // Проверяем обязательные поля
+  const nameField = form.querySelector(`[name="name_${formIndex}"]`);
+  const hasChildrenField = form.querySelector(`[name="hasChildren_${formIndex}"]:checked`);
+  
+  // Сбрасываем стили ошибок
+  form.querySelectorAll('.form-group').forEach(group => {
+    group.classList.remove('error');
+  });
+  
+  if (!nameField.value.trim()) {
+    errors.push('Имя и фамилия');
+    nameField.closest('.form-group').classList.add('error');
+  }
+  
+  if (!hasChildrenField) {
+    errors.push('Будет ли с вами на празднике ребенок?');
+    form.querySelector('.form-group:has(input[name*="hasChildren"])').classList.add('error');
+  }
+  
+  return errors;
+}
+
+// Отправка всех форм
+async function submitAllForms() {
+  const formsContainer = document.getElementById('forms-container');
+  const forms = formsContainer.querySelectorAll('.guest-form-single');
+  const submitBtn = document.querySelector('.submit-all-btn');
+  
+  // Валидируем все формы
+  const allErrors = [];
+  forms.forEach((form, index) => {
+    const errors = validateForm(form);
+    if (errors.length > 0) {
+      allErrors.push(`Форма ${index + 1}: ${errors.join(', ')}`);
+    }
+  });
+  
+  if (allErrors.length > 0) {
+    alert('Пожалуйста, исправьте ошибки:\n' + allErrors.join('\n'));
+    return;
+  }
+  
+  // Блокируем кнопку
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Отправка...';
+  
+  try {
+    // Отправляем каждую форму отдельно
+    for (let i = 0; i < forms.length; i++) {
+      await submitSingleForm(forms[i]);
+    }
+    
+    // Показываем результат пользователю
+    const thanksElement = document.getElementById('thanks');
+    thanksElement.textContent = 'Спасибо! Все анкеты сохранены и отправлены в Telegram.';
+    thanksElement.style.display = '';
+
+    // Делаем все поля форм только для чтения/disabled
+    forms.forEach(form => {
+      form.querySelectorAll('input, textarea').forEach(el => {
+        if (el.type === 'radio' || el.type === 'checkbox') {
+          el.disabled = true;
+        } else {
+          el.readOnly = true;
+        }
+      });
+    });
+    
+    // Скрываем кнопки добавления гостей
+    document.querySelectorAll('.add-guest-btn').forEach(btn => {
+      btn.style.display = 'none';
+    });
+
+    setTimeout(() => {
+      thanksElement.style.display = 'none';
+    }, 5000);
+    
+  } catch (error) {
+    console.error('Ошибка отправки:', error);
+    alert(error.message || 'Ошибка, попробуйте позже');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'ОТПРАВИТЬ ВСЕ АНКЕТЫ';
+  }
+}
+
+// Обработка отправки всех форм
 function handleFormSubmission() {
-  document.addEventListener('submit', async function(e) {
-    if (e.target.classList.contains('guest-form-single')) {
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('submit-all-btn')) {
       e.preventDefault();
-      
-      const submitBtn = e.target.querySelector('.submit-btn');
-      const originalText = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Отправка...';
-      
-      try {
-        await submitSingleForm(e.target);
-        
-        // Показываем результат пользователю
-        const thanksElement = document.getElementById('thanks');
-        thanksElement.textContent = 'Спасибо! Ваш ответ сохранён и отправлен в Telegram.';
-        thanksElement.style.display = '';
-
-        // Делаем все поля формы только для чтения/disabled
-        e.target.querySelectorAll('input, textarea').forEach(el => {
-          if (el.type === 'radio' || el.type === 'checkbox') {
-            el.disabled = true;
-          } else {
-            el.readOnly = true;
-          }
-        });
-        
-        // Удаляем кнопки
-        const buttons = e.target.querySelectorAll('button');
-        buttons.forEach(btn => btn.remove());
-
-        setTimeout(() => {
-          thanksElement.style.display = 'none';
-        }, 3000);
-        
-      } catch (error) {
-        console.error('Ошибка отправки:', error);
-        alert(error.message || 'Ошибка, попробуйте позже');
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-      }
+      submitAllForms();
     }
   });
 }
@@ -378,12 +431,6 @@ function handleWillNotAttend() {
       if (addGuestBtn) {
         addGuestBtn.style.display = 'none';
       }
-      
-      // Расширяем кнопку "ОТПРАВИТЬ"
-      const submitBtn = form.querySelector('.submit-btn');
-      if (submitBtn) {
-        submitBtn.style.flex = '1';
-      }
     } else if (e.target.name && e.target.name.startsWith('willAttend_') && e.target.value === 'Обязательно буду!') {
       const form = e.target.closest('form');
       
@@ -400,12 +447,6 @@ function handleWillNotAttend() {
         if (addGuestBtn) {
           addGuestBtn.style.display = 'block';
         }
-      }
-      
-      // Восстанавливаем стили кнопок
-      const submitBtn = form.querySelector('.submit-btn');
-      if (submitBtn) {
-        submitBtn.style.flex = '1';
       }
     }
   });
