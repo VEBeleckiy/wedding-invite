@@ -473,6 +473,12 @@ html, body {
   }
   
 
+  
+  .telegram-qr img {
+    max-width: 100px;
+  }
+  
+
 }
 
 @media (max-width: 360px) {
@@ -595,6 +601,10 @@ html, body {
   
   .dress-code-video img {
     max-width: 80%;
+  }
+  
+  .telegram-qr img {
+    max-width: 80px;
   }
   
 
@@ -860,6 +870,30 @@ html, body {
   color: #888;
   line-height: 1.6;
   text-align: center;
+}
+
+.telegram-link {
+  color: #0088cc;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.telegram-link:hover {
+  color: #005580;
+  text-decoration: underline;
+}
+
+.telegram-qr {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.telegram-qr img {
+  max-width: 150px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
 .closing-message {
@@ -1632,6 +1666,10 @@ html, body {
   
   .dress-code-video img {
     max-width: 90%;
+  }
+  
+  .telegram-qr img {
+    max-width: 120px;
   }
 
   .form-buttons {
