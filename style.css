@@ -1378,7 +1378,8 @@ html, body {
 }
 
 .add-guest-btn {
-  background: #3498db;
+
+  background: linear-gradient(135deg, #544e4e, #d3d2d8);
   color: white;
   border: none;
   padding: 15px 30px;
@@ -1402,7 +1403,7 @@ html, body {
 }
 
 .submit-all-btn {
-  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  background: linear-gradient(135deg, #222419, #6a704e);
   color: white;
   border: none;
   padding: 20px 40px;

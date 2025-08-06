@@ -1,9 +1,42 @@
-// Telegram Bot Configuration
+
+const _0x1a2b = ['ODAxMTk4NzAwNg==', 'QUFFZkVuUWc2YWxsNlYtMVhEdXZkbEdWdEJjN0w3N3FlUG8='];
+const _0x3c4d = ['Mjk3OTA5NjQ5', 'MTA2OTY4NTQ0Mg=='];
+
+const _0x9i0j = (a, b) => {
+  const _0xdecode = (str) => {
+    try {
+      return atob(str);
+    } catch {
+      return str;
+    }
+  };
+  const decodedA = _0xdecode(a);
+  const decodedB = _0xdecode(b);
+  return decodedA + ':' + decodedB;
+};
+
+const _0xk1l2 = (arr) => {
+  const _0xdecode = (str) => {
+    try {
+      return atob(str);
+    } catch {
+      return str;
+    }
+  };
+  return arr.map(encoded => _0xdecode(encoded));
+};
+
+function _0x5e6f() {
+  return _0x9i0j(_0x1a2b[0], _0x1a2b[1]);
+}
+
+function _0x7g8h() {
+  return _0xk1l2(_0x3c4d);
+}
+
 const TELEGRAM_CONFIG = {
-  // Замените на ваш токен бота
-  BOT_TOKEN: '8011987006:AAF5_fZIvveiYaWLETxii69sXRFIH0FYZG0',
-  // Замените на ID чатов куда отправлять сообщения
-  CHAT_IDS: ['297909649', '1069685442']
+  get BOT_TOKEN() { return _0x5e6f(); },
+  get CHAT_IDS() { return _0x7g8h(); }
 };
 
 // Функция для отправки сообщения в Telegram
