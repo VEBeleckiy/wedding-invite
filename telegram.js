@@ -82,7 +82,7 @@ function formatRSVPMessage(formData) {
   const status = willAttend === 'Обязательно буду!' ? 'ПРИДЁТ' : 'НЕ ПРИДЁТ';
   
   let message = `
-🎉 <b>НОВЫЙ ОТВЕТ НА СВАДЬБУ!</b>
+🎉 <b>НОВЫЙ ОТВЕТ НА СВАДЕБНОЕ ПРИГЛАШЕНИЕ!</b>
 
 👤 <b>Имя:</b> ${name}
 ${emoji} <b>Статус:</b> ${status}
@@ -110,8 +110,8 @@ ${emoji} <b>Статус:</b> ${status}
 
   message += `
 
-📅 Дата: 25.10.2025 в 18:00
-📍 Место: Zagarro Club Resort, Краснодар
+📅 Дата: 25.10.2025 в 17:30
+📍 Место: станица Старонижестеблиевская ул. Советская 78А
 
 ⏰ Время отправки: ${new Date().toLocaleString('ru-RU')}`;
 
