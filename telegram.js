@@ -2,38 +2,52 @@
 const TELEGRAM_CONFIG = {
   // Замените на ваш токен бота
   BOT_TOKEN: '8011987006:AAF5_fZIvveiYaWLETxii69sXRFIH0FYZG0',
-  // Замените на ID чата куда отправлять сообщения
-  CHAT_ID: '297909649'
+  // Замените на ID чатов куда отправлять сообщения
+  CHAT_IDS: ['297909649', '1069685442']
 };
 
 // Функция для отправки сообщения в Telegram
 async function sendTelegramMessage(message) {
-  try {
-    const url = `https://api.telegram.org/bot${TELEGRAM_CONFIG.BOT_TOKEN}/sendMessage`;
-    
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CONFIG.CHAT_ID,
-        text: message,
-        parse_mode: 'HTML'
-      })
-    });
+  const url = `https://api.telegram.org/bot${TELEGRAM_CONFIG.BOT_TOKEN}/sendMessage`;
+  let successCount = 0;
+  let errorCount = 0;
+  
+  // Отправляем сообщение на все CHAT_ID
+  for (const chatId of TELEGRAM_CONFIG.CHAT_IDS) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+          parse_mode: 'HTML'
+        })
+      });
 
-    const result = await response.json();
-    
-    if (result.ok) {
-      console.log('Сообщение отправлено в Telegram');
-      return true;
-    } else {
-      console.error('Ошибка отправки в Telegram:', result);
-      return false;
+      const result = await response.json();
+      
+      if (result.ok) {
+        console.log(`Сообщение отправлено в Telegram на chat_id: ${chatId}`);
+        successCount++;
+      } else {
+        console.error(`Ошибка отправки в Telegram на chat_id ${chatId}:`, result);
+        errorCount++;
+      }
+    } catch (error) {
+      console.error(`Ошибка при отправке в Telegram на chat_id ${chatId}:`, error);
+      errorCount++;
     }
-  } catch (error) {
-    console.error('Ошибка при отправке в Telegram:', error);
+  }
+  
+  // Возвращаем true если хотя бы одно сообщение отправлено успешно
+  if (successCount > 0) {
+    console.log(`Успешно отправлено: ${successCount}/${TELEGRAM_CONFIG.CHAT_IDS.length} сообщений`);
+    return true;
+  } else {
+    console.error(`Не удалось отправить ни одного сообщения. Ошибок: ${errorCount}`);
     return false;
   }
 }
